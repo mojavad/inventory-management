@@ -6,6 +6,7 @@ export default {
     orders: 'Orders',
     finance: 'Finance',
     demandForecast: 'Demand Forecast',
+    restocking: 'Restocking',
     companyName: 'Catalyst Components',
     subtitle: 'Inventory Management System'
   },
@@ -101,6 +102,37 @@ export default {
     }
   },
 
+  // Restocking
+  restocking: {
+    title: 'Restocking',
+    description: 'Set a budget and submit a restock order based on the demand forecast',
+    budgetTitle: 'Procurement Budget',
+    budgetHint: 'Drag the slider to set your available budget',
+    recommendedTitle: 'Recommended Restock',
+    itemsRecommended: '{count} items recommended',
+    noItems: 'No items currently below forecast.',
+    table: {
+      sku: 'SKU',
+      item: 'Item',
+      trend: 'Trend',
+      currentStock: 'Current Stock',
+      forecast: 'Forecast',
+      gap: 'Gap',
+      unitCost: 'Unit Cost',
+      quantity: 'Qty',
+      subtotal: 'Subtotal'
+    },
+    totalCost: 'Total Cost',
+    remainingBudget: 'Remaining Budget',
+    overBudgetWarning: 'Submitting over budget — total exceeds the limit by {amount}.',
+    placeOrder: 'Place Order',
+    placing: 'Placing order...',
+    successTitle: 'Order submitted',
+    successBody: 'Order {orderNumber} placed. Expected delivery {date}.',
+    placeAnother: 'Place another order',
+    errorTitle: 'Failed to place order'
+  },
+
   // Orders
   orders: {
     title: 'Orders',
@@ -112,6 +144,10 @@ export default {
     onTimeDelivery: 'On-Time Delivery',
     itemsCount: '{count} items',
     quantity: 'Qty',
+    toggleCustomer: 'Customer Orders',
+    toggleRestocking: 'Restocking Orders',
+    restockingTitle: 'Submitted Restocking Orders',
+    restockingEmpty: 'No restocking orders submitted yet.',
     table: {
       orderNumber: 'Order Number',
       orderId: 'Order ID',
@@ -125,7 +161,10 @@ export default {
       totalValue: 'Total Value',
       status: 'Status',
       expectedDelivery: 'Expected Delivery',
-      actualDelivery: 'Actual Delivery'
+      actualDelivery: 'Actual Delivery',
+      submittedDate: 'Submitted',
+      leadTime: 'Lead Time',
+      leadTimeDays: '{days} days'
     }
   },
 

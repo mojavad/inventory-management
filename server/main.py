@@ -1,8 +1,12 @@
+from datetime import datetime, timedelta
+
 from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 from typing import List, Optional
-from pydantic import BaseModel
-from mock_data import inventory_items, orders, demand_forecasts, backlog_items, spending_summary, monthly_spending, category_spending, recent_transactions, purchase_orders
+from pydantic import BaseModel, Field
+from mock_data import inventory_items, orders, demand_forecasts, backlog_items, spending_summary, monthly_spending, category_spending, recent_transactions, purchase_orders, restocking_orders
+
+RESTOCKING_LEAD_TIME_DAYS = 14
 
 app = FastAPI(title="Factory Inventory Management System")
 
@@ -120,6 +124,25 @@ class CreatePurchaseOrderRequest(BaseModel):
     expected_delivery_date: str
     notes: Optional[str] = None
 
+class RestockingOrderItem(BaseModel):
+    sku: str
+    name: str
+    quantity: int
+    unit_cost: float
+
+class RestockingOrder(BaseModel):
+    id: str
+    order_number: str
+    status: str
+    items: List[RestockingOrderItem]
+    submitted_at: str
+    lead_time_days: int
+    expected_delivery: str
+    total_value: float
+
+class CreateRestockingOrderRequest(BaseModel):
+    items: List[RestockingOrderItem] = Field(..., min_length=1)
+
 # API endpoints
 @app.get("/")
 def root():
@@ -160,6 +183,33 @@ def get_order(order_id: str):
     if not order:
         raise HTTPException(status_code=404, detail="Order not found")
     return order
+
+@app.post("/api/restocking-orders", response_model=RestockingOrder, status_code=201)
+def create_restocking_order(request: CreateRestockingOrderRequest):
+    """Submit a new restocking order. Stored in-memory only."""
+    now = datetime.now()
+    expected = now + timedelta(days=RESTOCKING_LEAD_TIME_DAYS)
+    new_id = str(len(restocking_orders) + 1)
+    order_number = f"RST-{now.year}-{int(new_id):04d}"
+    total_value = round(sum(item.quantity * item.unit_cost for item in request.items), 2)
+
+    order = RestockingOrder(
+        id=new_id,
+        order_number=order_number,
+        status="Submitted",
+        items=request.items,
+        submitted_at=now.isoformat(timespec="seconds"),
+        lead_time_days=RESTOCKING_LEAD_TIME_DAYS,
+        expected_delivery=expected.isoformat(timespec="seconds"),
+        total_value=total_value,
+    )
+    restocking_orders.append(order.model_dump())
+    return order
+
+@app.get("/api/restocking-orders", response_model=List[RestockingOrder])
+def get_restocking_orders():
+    """Get all submitted restocking orders, newest first."""
+    return sorted(restocking_orders, key=lambda o: o["submitted_at"], reverse=True)
 
 @app.get("/api/demand", response_model=List[DemandForecast])
 def get_demand_forecasts():
