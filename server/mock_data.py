@@ -35,5 +35,9 @@ recent_transactions = load_json_file('transactions.json')
 # Load purchase orders
 purchase_orders = load_json_file('purchase_orders.json')
 
+# In-memory store for restocking orders submitted via POST /api/restocking-orders.
+# Resets on server restart — no persistence layer for the demo.
+restocking_orders: list = []
+
 # All data is now loaded from JSON files in the data/ directory
 # This allows for easier maintenance and updates of the sample data

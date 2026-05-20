@@ -6,6 +6,7 @@ export default {
     orders: '注文',
     finance: '財務',
     demandForecast: '需要予測',
+    restocking: '補充',
     companyName: '触媒コンポーネンツ',
     subtitle: '在庫管理システム'
   },
@@ -101,6 +102,37 @@ export default {
     }
   },
 
+  // Restocking
+  restocking: {
+    title: '補充',
+    description: '予算を設定し、需要予測に基づいて補充注文を送信します',
+    budgetTitle: '調達予算',
+    budgetHint: 'スライダーをドラッグして利用可能な予算を設定してください',
+    recommendedTitle: '補充推奨',
+    itemsRecommended: '{count}件推奨',
+    noItems: '現在、予測を下回る品目はありません。',
+    table: {
+      sku: 'SKU',
+      item: '品目',
+      trend: 'トレンド',
+      currentStock: '現在在庫',
+      forecast: '予測',
+      gap: '不足',
+      unitCost: '単価',
+      quantity: '数量',
+      subtotal: '小計'
+    },
+    totalCost: '合計費用',
+    remainingBudget: '残予算',
+    overBudgetWarning: '予算超過 — 合計が上限を{amount}超えています。',
+    placeOrder: '注文する',
+    placing: '注文処理中...',
+    successTitle: '注文完了',
+    successBody: '注文{orderNumber}が完了しました。配達予定日：{date}。',
+    placeAnother: '別の注文をする',
+    errorTitle: '注文に失敗しました'
+  },
+
   // Orders
   orders: {
     title: '注文',
@@ -112,6 +144,10 @@ export default {
     onTimeDelivery: '定時配達',
     itemsCount: '{count}件',
     quantity: '数量',
+    toggleCustomer: '顧客注文',
+    toggleRestocking: '補充注文',
+    restockingTitle: '送信済み補充注文',
+    restockingEmpty: '補充注文はまだ送信されていません。',
     table: {
       orderNumber: '注文番号',
       orderId: '注文ID',
@@ -125,7 +161,10 @@ export default {
       totalValue: '合計金額',
       status: 'ステータス',
       expectedDelivery: '予定配達日',
-      actualDelivery: '実際の配達日'
+      actualDelivery: '実際の配達日',
+      submittedDate: '送信日',
+      leadTime: 'リードタイム',
+      leadTimeDays: '{days}日'
     }
   },
 
